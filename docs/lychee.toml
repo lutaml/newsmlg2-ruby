@@ -1,0 +1,4 @@
+# Link checker configuration for the built docs site.
+timeout = 20
+max_retries = 3
+retry_wait_time = 5

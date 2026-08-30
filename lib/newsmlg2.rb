@@ -91,6 +91,7 @@ module Newsmlg2
   # Document entry point and support.
   autoload :AliasNotFoundInCatalogs, 'newsmlg2/errors'
   autoload :Builder, 'newsmlg2/builder'
+  autoload :Configuration, 'newsmlg2/configuration'
   autoload :Document, 'newsmlg2/document'
   autoload :Error, 'newsmlg2/errors'
   autoload :I18n, 'newsmlg2/i18n'
@@ -166,4 +167,15 @@ module Newsmlg2
       Builder.build_news_message(**attributes, &)
     end
   end
+
+  # Registry: element id -> model class. The single source of truth for
+  # root-element dispatch and itemSet item resolution (plurimath/mml
+  # pattern); library code never compares element-name strings itself.
+  Configuration.register_model(NewsItem, id: :newsItem)
+  Configuration.register_model(PackageItem, id: :packageItem)
+  Configuration.register_model(ConceptItem, id: :conceptItem)
+  Configuration.register_model(KnowledgeItem, id: :knowledgeItem)
+  Configuration.register_model(CatalogItem, id: :catalogItem)
+  Configuration.register_model(PlanningItem, id: :planningItem)
+  Configuration.register_model(NewsMessage, id: :newsMessage)
 end

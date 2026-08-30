@@ -18,6 +18,12 @@ module Newsmlg2
   # mappings and the class's own xml block, so group mixins merge in include
   # order and serialized child order follows declaration order.
   class NarModel < Lutaml::Model::Serializable
+    # Resolve registry symbol types (e.g. ItemSet's :"newsItem") in the
+    # Newsmlg2 context for direct from_xml/to_xml calls.
+    def self.lutaml_default_register
+      Newsmlg2::Configuration::CONTEXT_ID
+    end
+
     xml do
       namespace Newsmlg2::NarNamespace
     end

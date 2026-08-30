@@ -97,21 +97,36 @@ module Newsmlg2
   end
 
   # The set of items to be exchanged. The XSD models itemSet content as
-  # xs:any over NewsML-G2 items; the raw content is preserved verbatim and
-  # can be accessed typed via #items.
+  # xs:any over NewsML-G2 items; each carried item type is mapped with its
+  # own element rule and a registry-resolved symbol type (the plurimath/mml
+  # CommonElements pattern — element names live only in this DSL).
   class ItemSet < Newsmlg2::NarModel
     include Newsmlg2::Base::CommonPowerAttributes
 
-    attribute :content, :string
+    attribute :news_items, :newsItem, collection: true
+    attribute :package_items, :packageItem, collection: true
+    attribute :concept_items, :conceptItem, collection: true
+    attribute :knowledge_items, :knowledgeItem, collection: true
+    attribute :catalog_items, :catalogItem, collection: true
+    attribute :planning_items, :planningItem, collection: true
+    attribute :news_messages, :newsMessage, collection: true
 
     xml do
       element 'itemSet'
-      map_all to: :content
+      map_element 'newsItem', to: :news_items
+      map_element 'packageItem', to: :package_items
+      map_element 'conceptItem', to: :concept_items
+      map_element 'knowledgeItem', to: :knowledge_items
+      map_element 'catalogItem', to: :catalog_items
+      map_element 'planningItem', to: :planning_items
+      map_element 'newsMessage', to: :news_messages
     end
 
-    # Parses the carried item elements into typed Newsmlg2 items.
+    # All carried items (grouped by item type — the model keeps per-type
+    # collections, as lutaml-model mappings are name-keyed).
     def items
-      Newsmlg2::Document.parse_item_set_content(content)
+      news_items + package_items + concept_items + knowledge_items +
+        catalog_items + planning_items + news_messages
     end
   end
 

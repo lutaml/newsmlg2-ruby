@@ -17,7 +17,9 @@ Four local checkouts are the authority for this port. Consult them before design
 | `/Users/mulgogi/src/external/python-newsmlg2/` | Reference implementation (Python, lxml). ~317 model classes in `NewsMLG2/*.py`; its `tests/` (11 files, 35 tests, 13 fixtures in `tests/test_files/`) must be **ported fully and pass**. |
 | `/Users/mulgogi/src/external/newsml-g2/` | **Official IPTC spec repo** (git@github.com:iptc/newsml-g2). XSDs in `specification/` and `tests/schema_versions/`; 31 example listings in `examples/`; official unit-test suite: 161 XML files in `tests/unit_test_files/{version}/should_pass|should_fail/` run by `tests/runtests.py`. All are compliance fixtures for our specs. |
 | `/Users/mulgogi/src/lutaml/chemicalml/` | Sibling gem whose **gemspec, GitHub workflows, and architecture we fully adopt** (gemspec, `.github/workflows/rake.yml`+`release.yml`, `Base::*` mixin pattern, canon-based round-trip specs). |
-| `/Users/mulgogi/src/mn/metanorma-document/` | lutaml-model usage reference. NOTE: it has **no builder DSL** — the NewsML builder DSL is designed in `TODO.impl/12-builder-dsl.md`, generated generically from model metadata. |
+| `/Users/mulgogi/src/plurimath/mml/` | **Registry-pattern reference**: how models register into a lutaml GlobalContext (`register_model(Klass, id:)`), resolve via `GlobalContext.resolve_type`, and model heterogeneous children with per-element attributes + symbol types (CommonElements). |
+| `/Users/mulgogi/src/mn/metanorma-document/` | lutaml-model usage reference. NOTE: it has **no builder DSL** — the NewsML builder DSL is generated generically from model metadata. |
+| `/Users/mulgogi/src/lutaml/lutaml-model/docs/` | lutaml-model's own documentation (guides/references/tutorials) — the authority on the framework's public API. |
 
 Ground truth on NewsML-G2 semantics (item types, itemMeta/contentMeta/partMeta, catalog/scheme/qcode system, conformance levels): the 2.35 XSDs in the official repo (`specification/individual/NewsML-G2_2.35-spec-Framework-Power.xsd` is the core, 5.3k lines).
 
@@ -52,7 +54,9 @@ One Ruby class per NewsML-G2 complex type, `snake_case` file per class under `li
 
 ### Subsystems
 
-- **`Newsmlg2::Document`** — entry point mirroring python's `NewsMLG2Document`: `Newsmlg2.parse(xml)` / `parse_file(path)` → detects root element (`newsItem`, `packageItem`, `conceptItem`, `knowledgeItem`, `catalogItem`, `planningItem`, `newsMessage`) → typed item; `#item`/`#item=`; `#to_xml` with declaration, NAR default ns, `nitf` + `xml` prefixes; writes required defaults (`standard="NewsML-G2" standardversion="2.35" conformance="power" version="1"`).
+- **`Newsmlg2::Configuration`** — the registry: every root model is registered by element id (`register_model(NewsItem, id: :"newsItem")` … in the `lib/newsmlg2.rb` module body) into a lutaml GlobalContext. It is the **single source of truth** for element-name → class resolution.
+- **`Newsmlg2::Document`** — thin entry point: `Newsmlg2.parse(xml)` / `parse_file(path)` resolves the root class **through the registry** and delegates to `klass.from_xml`; `#item`/`#item=`; `#to_xml` with declaration; writes required defaults (`standard="NewsML-G2" standardversion="2.35" conformance="power" version="1"`). `NarModel.lutaml_default_register` binds symbol-typed attributes to the `:newsmlg2` context (chemicalml `Context` pattern).
+- **`ItemSet`** — typed the mml CommonElements way: one collection attribute + `map_element` per carried item type, types as registry symbols (`:"newsItem"`).
 - **Catalog system** — `CatalogStore` (per-document), `Catalog`/`CatalogRef`/`Scheme`, bundled IPTC catalogs (`lib/newsmlg2/catalogs/*.xml`, v32–v41), `Newsmlg2.qcode_to_uri` / `uri_to_qcode`, errors `AliasNotFoundInCatalogs` / `URINotFoundInCatalogs`.
 - **Builder DSL** — `Newsmlg2.build_news_item(guid: …, lang: "en-GB") { |item| … }` (one `build_*` per item type). Node proxies are **generated from the model's lutaml attribute metadata** (snake_case methods, value coercion String→content-model, nested blocks, repeatable calls for collections). No per-class hand-written builder code.
 
@@ -65,6 +69,9 @@ One Ruby class per NewsML-G2 complex type, `snake_case` file per class under `li
 ## Conventions
 
 - Specs use **real model instances — never doubles**; assert behavior and output, not interactions.
+- **NEVER reference nokogiri (or any specific XML parser) in `lib/`** — specs only. All raw XML handling goes through lutaml-model's configured adapter (`Lutaml::Model::Config.adapter_for(:xml)`) or, better, `from_xml`/`to_xml` on models.
+- **NEVER hand-roll element-name dispatch** (no name→class hashes, no `node.name` comparisons in code). Element names live only in the `xml do` DSL and the `Configuration` registration block; dispatch goes through the registry / framework mappings.
+- **NEVER reimplement framework mechanics** (parsing, polymorphic dispatch, serialization) — read `~/src/lutaml/lutaml-model/docs/` and follow `~/src/plurimath/mml/`.
 - Gemspec/workflows follow chemicalml verbatim (adapted names): `required_ruby_version >= 3.3.0`, single runtime dep `lutaml-model ~> 0.8.0`, `BSD-2-Clause`, Ribose Inc.
 - Versions, tags, and releases are **the user's decision** — the release workflow is manually dispatched; never pick a version number.
 - All changes go through PRs; never commit/push to main or push tags.

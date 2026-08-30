@@ -44,6 +44,7 @@ module XmlOrderNormalizer
   def sort_key(child)
     [child.name,
      child.attributes.map { |k, v| "#{k}=#{v.value}" }.sort.join,
+     child.text.strip,
      child.to_xml.length]
   end
 
