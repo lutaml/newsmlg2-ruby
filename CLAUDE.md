@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `newsmlg2` — a lutaml-model-based Ruby object model for IPTC **NewsML-G2** (News Architecture, NAR): parse, manipulate, build (DSL), and serialize NewsML-G2 XML with round-trip fidelity. Targets spec version **2.35**, **power** conformance. Namespace: `Newsmlg2`.
 
-Implementation is driven by the ordered plan files in **`TODO.impl/`** (`01-…` through `13-…`). Execute them in order; each is self-contained with references, deliverables, and acceptance criteria.
+Implementation was driven by the ordered plan files in **`TODO.impl/`** (`01-…` through `14-…`; kept locally only — the directory is gitignored). Their completion records document every port deviation and design decision.
 
 ## Reference codebases — READ, do not guess
 
