@@ -118,7 +118,8 @@ RSpec.describe Newsmlg2::Document do
         'spec/fixtures/python/test_files/007_emptynewsmessage.xml'
       )
       expect(doc.item).to be_a(Newsmlg2::NewsMessage)
-      expect(doc.item.item_set.items.map { |i| i.class.name }).to eq(['Newsmlg2::PackageItem', 'Newsmlg2::NewsItem'])
+      expect(doc.item.item_set.items.map { |i| i.class.name })
+        .to contain_exactly('Newsmlg2::PackageItem', 'Newsmlg2::NewsItem')
     end
   end
 end

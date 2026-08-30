@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'nokogiri'
-
 module Newsmlg2
   # The NewsML-G2 document entry point: parses XML into a typed item (or
   # newsMessage), exposes it, and serializes back to XML. Each document owns
@@ -12,34 +10,22 @@ module Newsmlg2
   #   doc.item.content_meta.headlines.first
   #   doc.catalog_store.get_scheme_for_alias("ninat")
   #   doc.to_xml                     # => declaration + item XML
+  #
+  # Root dispatch and itemSet resolution go through the Configuration
+  # registry; all model parsing is lutaml-model's from_xml. The gem never
+  # references a specific XML parser — the adapter is the consumer's
+  # choice via Lutaml::Model::Config.
   class Document
-    ROOT_ITEM_CLASSES = {
-      'newsItem' => 'Newsmlg2::NewsItem',
-      'packageItem' => 'Newsmlg2::PackageItem',
-      'conceptItem' => 'Newsmlg2::ConceptItem',
-      'knowledgeItem' => 'Newsmlg2::KnowledgeItem',
-      'catalogItem' => 'Newsmlg2::CatalogItem',
-      'planningItem' => 'Newsmlg2::PlanningItem',
-      'newsMessage' => 'Newsmlg2::NewsMessage'
-    }.freeze
-
     class << self
-      # The root element name -> class map used for dispatch.
-      def item_classes
-        ROOT_ITEM_CLASSES.transform_values { |name| Object.const_get(name) }
-      end
-
       # Parses NewsML-G2 XML into a Document.
       def parse(xml)
-        root_name = root_element_name(xml)
-        klass = ROOT_ITEM_CLASSES[root_name]
+        root_name, klass = root_class(xml)
         unless klass
           raise UnknownRootElement,
                 "'#{root_name}' is not a NewsML-G2 item or newsMessage root element"
         end
 
-        item = Object.const_get(klass).from_xml(xml)
-        new(item)
+        new(klass.from_xml(xml))
       end
 
       # Parses a NewsML-G2 XML file into a Document.
@@ -47,27 +33,20 @@ module Newsmlg2
         parse(File.read(path))
       end
 
-      # Parses the item elements carried inside a newsMessage itemSet
-      # (raw-captured content) into typed items.
-      def parse_item_set_content(content)
-        return [] if content.to_s.strip.empty?
-
-        fragment = Nokogiri::XML::DocumentFragment.parse(content.to_s)
-        by_name = item_classes
-        fragment.children.filter_map do |node|
-          next unless node.element?
-
-          klass = by_name[node.name]
-          klass&.from_xml(node.to_xml)
-        end
-      end
-
       private
 
-      def root_element_name(xml)
-        stripped = xml.gsub(/<!--.*?-->/m, '')
-        stripped[/\A\s*(?:<\?[^>]*\?>\s*)?<(?:[\w-]+:)?([\w-]+)/, 1] ||
-          stripped[%r{\A\s*(?:<\?[^>]*\?>\s*)?<([^\s>/]+)}, 1].to_s
+      # NewsML-G2 has eight possible root elements and lutaml-model has no
+      # multi-root dispatch, so the document's root element name is read
+      # once through the configured adapter and resolved to its registered
+      # model class. No element-name strings live in this file — the
+      # registry (lib/newsmlg2.rb registration block) is the single source
+      # of truth.
+      def root_class(xml)
+        root = Lutaml::Model::Config.adapter_for(:xml).parse(xml).root
+        name = root.name.sub(/\A[\w.-]+:/, '')
+        [name, Configuration.resolve(name)]
+      rescue StandardError
+        ['', nil]
       end
     end
 

@@ -34,8 +34,8 @@ RSpec.describe 'python test_newsmessage' do
       .to eq('http://cv.iptc.org/newscodes/ninature/')
   end
 
-  it 'exposes typed items from the raw itemSet' do
+  it 'exposes typed items from the itemSet (grouped per item type)' do
     expect(item.item_set.items.map { |i| i.class.name })
-      .to eq(['Newsmlg2::PackageItem', 'Newsmlg2::NewsItem'])
+      .to contain_exactly('Newsmlg2::PackageItem', 'Newsmlg2::NewsItem')
   end
 end
