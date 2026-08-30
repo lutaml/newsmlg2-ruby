@@ -1,0 +1,4 @@
+title: newsmlg2
+description: NewsML-G2 for Ruby, built on lutaml-model
+theme: jekyll-theme-minimal
+markdown: kramdown

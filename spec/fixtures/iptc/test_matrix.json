@@ -1,0 +1,853 @@
+{
+ "dev": {
+  "schema_file": "G2-multi-schema-dev-0.10-nar235.xsd",
+  "pass": [
+   "dev/should_pass",
+   "2.35/should_pass",
+   "2.34/should_pass",
+   "2.33/should_pass",
+   "2.32/should_pass",
+   "2.31/should_pass",
+   "2.30/should_pass",
+   "2.29/should_pass",
+   "2.28/should_pass",
+   "2.27/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "dev/should_fail"
+  ]
+ },
+ "2.35": {
+  "schema_file": "G2-multi-schema-2.35.xsd",
+  "pass": [
+   "2.35/should_pass",
+   "2.34/should_pass",
+   "2.33/should_pass",
+   "2.32/should_pass",
+   "2.31/should_pass",
+   "2.30/should_pass",
+   "2.29/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.35/should_fail"
+  ]
+ },
+ "2.34": {
+  "schema_file": "G2-multi-schema-2.34.xsd",
+  "pass": [
+   "2.34/should_pass",
+   "2.33/should_pass",
+   "2.32/should_pass",
+   "2.31/should_pass",
+   "2.30/should_pass",
+   "2.29/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.34/should_fail"
+  ]
+ },
+ "2.33": {
+  "schema_file": "NewsML-G2_2.33-spec-All-Power.xsd",
+  "pass": [
+   "2.33/should_pass",
+   "2.32/should_pass",
+   "2.31/should_pass",
+   "2.30/should_pass",
+   "2.29/should_pass",
+   "2.28/should_pass",
+   "2.27/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.33/should_fail"
+  ]
+ },
+ "2.32": {
+  "schema_file": "NewsML-G2_2.32-spec-All-Power.xsd",
+  "pass": [
+   "2.32/should_pass",
+   "2.31/should_pass",
+   "2.30/should_pass",
+   "2.29/should_pass",
+   "2.28/should_pass",
+   "2.27/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.32/should_fail"
+  ]
+ },
+ "2.31": {
+  "schema_file": "NewsML-G2_2.31-spec-All-Power.xsd",
+  "pass": [
+   "2.31/should_pass",
+   "2.30/should_pass",
+   "2.29/should_pass",
+   "2.28/should_pass",
+   "2.27/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.31/should_fail"
+  ]
+ },
+ "2.30": {
+  "schema_file": "NewsML-G2_2.30-spec-All-Power.xsd",
+  "pass": [
+   "2.30/should_pass",
+   "2.29/should_pass",
+   "2.28/should_pass",
+   "2.27/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.30/should_fail"
+  ]
+ },
+ "2.29": {
+  "schema_file": "NewsML-G2_2.29-spec-All-Power.xsd",
+  "pass": [
+   "2.29/should_pass",
+   "2.28/should_pass",
+   "2.27/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.29/should_fail"
+  ]
+ },
+ "2.28": {
+  "schema_file": "NewsML-G2_2.28-spec-All-Power.xsd",
+  "pass": [
+   "2.28/should_pass",
+   "2.27/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.27": {
+  "schema_file": "NewsML-G2_2.27-spec-All-Power.xsd",
+  "pass": [
+   "2.27/should_pass",
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.26": {
+  "schema_file": "NewsML-G2_2.26-spec-All-Power.xsd",
+  "pass": [
+   "2.26/should_pass",
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.25": {
+  "schema_file": "NewsML-G2_2.25-spec-All-Power.xsd",
+  "pass": [
+   "2.25/should_pass",
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.24": {
+  "schema_file": "NewsML-G2_2.24-spec-All-Power.xsd",
+  "pass": [
+   "2.24/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.23": {
+  "schema_file": "G2-multi-schema-2.23.xsd",
+  "pass": [
+   "2.23/should_pass",
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.22": {
+  "schema_file": "NewsML-G2_2.22-spec-All-Power.xsd",
+  "pass": [
+   "2.22/should_pass",
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.21": {
+  "schema_file": "NewsML-G2_2.21-spec-All-Power.xsd",
+  "pass": [
+   "2.21/should_pass",
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.20": {
+  "schema_file": "NewsML-G2_2.20-spec-All-Power.xsd",
+  "pass": [
+   "2.20/should_pass",
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.19": {
+  "schema_file": "NewsML-G2_2.19-spec-All-Power.xsd",
+  "pass": [
+   "2.19/should_pass",
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.18": {
+  "schema_file": "NewsML-G2_2.18-spec-All-Power.xsd",
+  "pass": [
+   "2.18/should_pass",
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.17": {
+  "schema_file": "NewsML-G2_2.17-spec-All-Power.xsd",
+  "pass": [
+   "2.17/should_pass",
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.16": {
+  "schema_file": "NewsML-G2_2.16-spec-All-Power.xsd",
+  "pass": [
+   "2.16/should_pass",
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.15": {
+  "schema_file": "NewsML-G2_2.15-spec-All-Power.xsd",
+  "pass": [
+   "2.15/should_pass",
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.15/should_fail",
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.14": {
+  "schema_file": "NewsML-G2_2.14-spec-All-Power.xsd",
+  "pass": [
+   "2.14/should_pass",
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.14/should_fail",
+   "2.15/should_fail",
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.13": {
+  "schema_file": "NewsML-G2_2.13-spec-All-Power.xsd",
+  "pass": [
+   "2.13/should_pass",
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.13/should_fail",
+   "2.14/should_fail",
+   "2.15/should_fail",
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.12": {
+  "schema_file": "NewsML-G2_2.12-spec-All-Power.xsd",
+  "pass": [
+   "2.12/should_pass",
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.12/should_fail",
+   "2.13/should_fail",
+   "2.14/should_fail",
+   "2.15/should_fail",
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.11": {
+  "schema_file": "NewsML-G2_2.11-spec-All-Power.xsd",
+  "pass": [
+   "2.11/should_pass",
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.11/should_fail",
+   "2.12/should_fail",
+   "2.13/should_fail",
+   "2.14/should_fail",
+   "2.15/should_fail",
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.10": {
+  "schema_file": "NewsML-G2_2.10-spec-All-Power.xsd",
+  "pass": [
+   "2.10/should_pass",
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.10/should_fail",
+   "2.11/should_fail",
+   "2.12/should_fail",
+   "2.13/should_fail",
+   "2.14/should_fail",
+   "2.15/should_fail",
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "2.9": {
+  "schema_file": "NewsML-G2_2.9-spec-All-Power.xsd",
+  "pass": [
+   "2.9/should_pass"
+  ],
+  "fail": [
+   "2.9/should_fail",
+   "2.10/should_fail",
+   "2.11/should_fail",
+   "2.12/should_fail",
+   "2.13/should_fail",
+   "2.14/should_fail",
+   "2.15/should_fail",
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ },
+ "NAR1.9": {
+  "schema_file": "NAR_1.9-spec-All-Power.xsd",
+  "pass": [
+   "NAR1.9/should_pass"
+  ],
+  "fail": [
+   "2.10/should_fail",
+   "2.11/should_fail",
+   "2.12/should_fail",
+   "2.13/should_fail",
+   "2.14/should_fail",
+   "2.15/should_fail",
+   "2.16/should_fail",
+   "2.17/should_fail",
+   "2.18/should_fail",
+   "2.19/should_fail",
+   "2.20/should_fail",
+   "2.21/should_fail",
+   "2.22/should_fail",
+   "2.23/should_fail",
+   "2.24/should_fail",
+   "2.25/should_fail",
+   "2.26/should_fail",
+   "2.27/should_fail",
+   "2.28/should_fail",
+   "2.29/should_fail"
+  ]
+ }
+}

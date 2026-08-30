@@ -1,0 +1,51 @@
+require:
+  - rubocop
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3
+  Exclude:
+    - "pkg/**/*"
+    - "vendor/**/*"
+    - "coverage/**/*"
+    - "reference-docs/**/*"
+    - "spec/fixtures/**/*"
+    - "data/**/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+    - "*.gemspec"
+    - "lib/newsmlg2/base/**/*"
+    - "lib/tasks/*.rake"
+
+Metrics/MethodLength:
+  Exclude:
+    - "lib/newsmlg2/base/**/*"
+    - "lib/newsmlg2/builder/**/*"
+
+Metrics/AbcSize:
+  Exclude:
+    - "lib/newsmlg2/base/**/*"
+    - "lib/newsmlg2/builder/**/*"
+
+Metrics/ModuleLength:
+  Exclude:
+    - "lib/newsmlg2/base/**/*"
+    - "lib/newsmlg2.rb"
+    - "lib/newsmlg2/types.rb"
+    - "lib/newsmlg2/base.rb"
+    - "spec/support/**/*"
+
+Layout/LineLength:
+  Exclude:
+    - "lib/newsmlg2/base/**/*"
+    - "spec/**/*"
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - "spec/**/*"
+    - "lib/tasks/*.rake"
+
+Style/Documentation:
+  Enabled: false
