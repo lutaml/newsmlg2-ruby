@@ -19,13 +19,15 @@ module Newsmlg2
     class << self
       # Parses NewsML-G2 XML into a Document.
       def parse(xml)
-        root_name, klass = root_class(xml)
-        unless klass
-          raise UnknownRootElement,
-                "'#{root_name}' is not a NewsML-G2 item or newsMessage root element"
-        end
+        with_resolved_adapter do
+          root_name, klass = root_class(xml)
+          unless klass
+            raise UnknownRootElement,
+                  "'#{root_name}' is not a NewsML-G2 item or newsMessage root element"
+          end
 
-        new(klass.from_xml(xml))
+          new(klass.from_xml(xml))
+        end
       end
 
       # Parses a NewsML-G2 XML file into a Document.
@@ -34,6 +36,17 @@ module Newsmlg2
       end
 
       private
+
+      # Runs the block with the consumer's configured XML adapter; if none
+      # resolves (fresh install, unconfigured default), falls back to the
+      # REXML adapter, which ships with Ruby — the gem never depends on a
+      # specific parser.
+      def with_resolved_adapter(&)
+        Lutaml::Model::Config.adapter_for(:xml)
+        yield
+      rescue Lutaml::Model::UnknownAdapterTypeError, LoadError
+        Lutaml::Model::Config.with_adapter(xml: :rexml, &)
+      end
 
       # NewsML-G2 has eight possible root elements and lutaml-model has no
       # multi-root dispatch, so the document's root element name is read

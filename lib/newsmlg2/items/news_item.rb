@@ -24,7 +24,7 @@ module Newsmlg2
     include Newsmlg2::Base::NewsContentCharacteristics
     include Newsmlg2::Base::I18NAttributes
 
-    xml_attributes encoding: 'encoding', encodinguri: 'encodinguri'
+    xml_attributes content_encoding: 'encoding', encodinguri: 'encodinguri'
 
     attribute :content, :string
 

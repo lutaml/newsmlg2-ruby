@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.1.1] - 2026-08-30
+
+### Fixed
+
+- `Newsmlg2.parse` now works on a fresh install with no XML adapter
+  configured: when the configured adapter cannot be resolved, the
+  stdlib REXML adapter is used instead of raising.
+- Renamed `InlineData#encoding` to `#content_encoding` (wire name
+  unchanged) to silence a lutaml-model override warning at load time.
+
 ## [0.1.0] - 2026-08-30
 
 ### Added
