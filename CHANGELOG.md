@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Architecture deepening: qcode ⇄ URI conversion moved from `Utils` onto
+  `CatalogStore` (which owns the schemes); items expose `#catalog_holders`
+  so `Document` no longer type-switches to find catalogs; the builder
+  `build_*` factories and `ItemSet`'s carried-item mapping are generated
+  from the `Configuration` registry instead of hand-mirroring it.
+
 ### Fixed
 
 - Builder DSL: assigning a non-coercible value to an attribute (most
