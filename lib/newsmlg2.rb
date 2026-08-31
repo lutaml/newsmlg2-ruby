@@ -138,34 +138,6 @@ module Newsmlg2
     def build_item(klass, **attributes, &)
       Builder.build(klass, attributes, &)
     end
-
-    def build_news_item(**attributes, &)
-      Builder.build_news_item(**attributes, &)
-    end
-
-    def build_package_item(**attributes, &)
-      Builder.build_package_item(**attributes, &)
-    end
-
-    def build_concept_item(**attributes, &)
-      Builder.build_concept_item(**attributes, &)
-    end
-
-    def build_knowledge_item(**attributes, &)
-      Builder.build_knowledge_item(**attributes, &)
-    end
-
-    def build_catalog_item(**attributes, &)
-      Builder.build_catalog_item(**attributes, &)
-    end
-
-    def build_planning_item(**attributes, &)
-      Builder.build_planning_item(**attributes, &)
-    end
-
-    def build_news_message(**attributes, &)
-      Builder.build_news_message(**attributes, &)
-    end
   end
 
   # Registry: element id -> model class. The single source of truth for
@@ -178,4 +150,13 @@ module Newsmlg2
   Configuration.register_model(CatalogItem, id: :catalogItem)
   Configuration.register_model(PlanningItem, id: :planningItem)
   Configuration.register_model(NewsMessage, id: :newsMessage)
+
+  # The build_* factory entry points (build_news_item, build_news_message,
+  # ...) mirror Builder's registry-generated factories — registering a model
+  # above adds its facade method here too.
+  Builder.factory_names.each do |factory|
+    define_singleton_method(factory) do |**attributes, &block|
+      Builder.public_send(factory, **attributes, &block)
+    end
+  end
 end

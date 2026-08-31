@@ -28,6 +28,20 @@ module Newsmlg2
 
     autoload :Node, 'newsmlg2/builder/node'
 
+    # One build_* factory per registered item type, generated from the
+    # registry (newsItem -> build_news_item, newsMessage ->
+    # build_news_message). Registering a model adds its factory; the
+    # registry stays the single source of truth for the item types.
+    FACTORIES = Newsmlg2::Configuration.models.to_h { |model_id, klass|
+      [:"build_#{Newsmlg2::Configuration.snake(model_id)}", klass]
+    }.freeze
+
+    FACTORIES.each do |factory, klass|
+      define_singleton_method(factory) do |**attributes, &block|
+        build(klass, attributes, &block)
+      end
+    end
+
     class << self
       # Builds any item model and returns a Document.
       def build(klass, attributes = {}, &block)
@@ -37,32 +51,9 @@ module Newsmlg2
         Document.new(model)
       end
 
-      def build_news_item(**attributes, &)
-        build(Newsmlg2::NewsItem, attributes, &)
-      end
-
-      def build_package_item(**attributes, &)
-        build(Newsmlg2::PackageItem, attributes, &)
-      end
-
-      def build_concept_item(**attributes, &)
-        build(Newsmlg2::ConceptItem, attributes, &)
-      end
-
-      def build_knowledge_item(**attributes, &)
-        build(Newsmlg2::KnowledgeItem, attributes, &)
-      end
-
-      def build_catalog_item(**attributes, &)
-        build(Newsmlg2::CatalogItem, attributes, &)
-      end
-
-      def build_planning_item(**attributes, &)
-        build(Newsmlg2::PlanningItem, attributes, &)
-      end
-
-      def build_news_message(**attributes, &)
-        build(Newsmlg2::NewsMessage, attributes, &)
+      # The generated factory method names (one per registered item type).
+      def factory_names
+        FACTORIES.keys
       end
     end
   end
