@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Fixed
+
+- Builder DSL: assigning a non-coercible value to an attribute (most
+  commonly a foreign object captured by `instance_eval` when an
+  unqualified method call inside a block collides with an attribute name)
+  now fails fast with an `ArgumentError` explaining the semantics,
+  instead of corrupting the model graph and failing at serialization
+  time.
+
+### Added
+
+- Builder DSL: `Time`, `Date`, `DateTime` and `Symbol` values are coerced
+  into content-bearing types (ISO 8601, offset preserved).
+- README documents the `instance_eval` gotcha and the precompute /
+  explicit-receiver patterns.
+
 ## [0.1.1] - 2026-08-30
 
 ### Fixed
