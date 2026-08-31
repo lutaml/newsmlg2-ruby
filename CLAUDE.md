@@ -72,6 +72,6 @@ One Ruby class per NewsML-G2 complex type, `snake_case` file per class under `li
 - **NEVER reference nokogiri (or any specific XML parser) in `lib/`** — specs only. All raw XML handling goes through lutaml-model's configured adapter (`Lutaml::Model::Config.adapter_for(:xml)`) or, better, `from_xml`/`to_xml` on models.
 - **NEVER hand-roll element-name dispatch** (no name→class hashes, no `node.name` comparisons in code). Element names live only in the `xml do` DSL and the `Configuration` registration block; dispatch goes through the registry / framework mappings.
 - **NEVER reimplement framework mechanics** (parsing, polymorphic dispatch, serialization) — read `~/src/lutaml/lutaml-model/docs/` and follow `~/src/plurimath/mml/`.
-- Gemspec/workflows follow chemicalml verbatim (adapted names): `required_ruby_version >= 3.3.0`, single runtime dep `lutaml-model ~> 0.8.0`, `BSD-2-Clause`, Ribose Inc.
+- Gemspec follows chemicalml; workflows follow **ali** (`~/src/lutaml/ali/`): rake.yml forwards no PAT (default-token dispatch), release.yml is tag-push + workflow_dispatch publishing via **OIDC Trusted Publishing** (trusted publisher registered on rubygems.org: this repo calling `rubygems-release.yml` from metanorma/ci; no API-key secret). `required_ruby_version >= 3.3.0`, single runtime dep `lutaml-model ~> 0.8.0`, `BSD-2-Clause`, Ribose Inc.
 - Versions, tags, and releases are **the user's decision** — the release workflow is manually dispatched; never pick a version number.
 - All changes go through PRs; never commit/push to main or push tags.
