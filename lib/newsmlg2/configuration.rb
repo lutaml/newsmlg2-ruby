@@ -36,6 +36,17 @@ module Newsmlg2
         klass
       end
 
+      # The registered models, in registration order (element id => class).
+      def models
+        registered_models.dup
+      end
+
+      # The snake_case Ruby name of an element id (newsItem -> "news_item"),
+      # used to derive factory and attribute names from the registry.
+      def snake(element_id)
+        element_id.to_s.gsub(/([A-Z])/, '_\1').downcase.sub(/\A_/, '')
+      end
+
       # Resolves an element name to its registered model class, or nil for
       # unregistered names (non-element nodes, foreign roots).
       def resolve(element_name)
