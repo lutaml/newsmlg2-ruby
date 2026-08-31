@@ -119,7 +119,7 @@ module Newsmlg2
     end
 
     # Expands a qcode (e.g. "ninat:text") to its full concept URI using the
-    # catalogs registered with the given document.
+    # catalogs registered with the given document (or a CatalogStore).
     #
     # @raise [Newsmlg2::AliasNotFoundInCatalogs]
     def qcode_to_uri(qcode, document)

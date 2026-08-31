@@ -57,10 +57,21 @@ RSpec.describe Newsmlg2::CatalogStore do
     end
 
     it 'supports qcode <-> uri conversion' do
+      expect(store.qcode_to_uri('ninat:text'))
+        .to eq('http://cv.iptc.org/newscodes/ninature/text')
+      expect(store.uri_to_qcode('http://cv.iptc.org/newscodes/ninature/text'))
+        .to eq('ninat:text')
       expect(Newsmlg2::Utils.qcode_to_uri('ninat:text', store))
         .to eq('http://cv.iptc.org/newscodes/ninature/text')
       expect(Newsmlg2::Utils.uri_to_qcode('http://cv.iptc.org/newscodes/ninature/text', store))
         .to eq('ninat:text')
+    end
+
+    it 'rejects values that are not qcodes or concept URIs' do
+      expect { store.qcode_to_uri('no-colon') }
+        .to raise_error(ArgumentError, /not a qcode/)
+      expect { store.uri_to_qcode('no-slash') }
+        .to raise_error(ArgumentError, /not a concept URI/)
     end
   end
 
