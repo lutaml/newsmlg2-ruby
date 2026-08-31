@@ -55,6 +55,28 @@ module Newsmlg2
             "no catalog of this document declares the scheme URI '#{uri}'"
     end
 
+    # Expands a qcode (e.g. "ninat:text") to its full concept URI.
+    #
+    # @raise [Newsmlg2::AliasNotFoundInCatalogs]
+    def qcode_to_uri(qcode)
+      alias_name, code = qcode.split(':', 2)
+      raise ArgumentError, "not a qcode: #{qcode.inspect}" if code.nil?
+
+      get_scheme_for_alias(alias_name).uri + code
+    end
+
+    # Compresses a concept URI back to a qcode (e.g. "ninat:text").
+    #
+    # @raise [Newsmlg2::UriNotFoundInCatalogs]
+    def uri_to_qcode(uri)
+      idx = uri.rindex('/')
+      raise ArgumentError, "not a concept URI: #{uri.inspect}" unless idx
+
+      scheme_uri = uri[0..idx]
+      code = uri[(idx + 1)..]
+      "#{get_scheme_for_uri(scheme_uri).alias_attr}:#{code}"
+    end
+
     def schemes
       catalogs.flat_map(&:schemes)
     end
