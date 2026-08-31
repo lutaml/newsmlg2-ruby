@@ -14,6 +14,14 @@ RSpec.describe Newsmlg2::CatalogStore do
 
     it 'returns nil for unknown URLs' do
       expect(Newsmlg2::CatalogCache.read('http://example.test/catalog.xml')).to be_nil
+      expect(Newsmlg2::CatalogCache.read(
+               "http://evil.test/#{File.basename(catalog40_url)}"
+             )).to be_nil
+    end
+
+    it 'parses each bundled catalog once, sharing the result' do
+      expect(Newsmlg2::CatalogCache.load(catalog40_url))
+        .to equal(Newsmlg2::CatalogCache.load(catalog40_url))
     end
   end
 
