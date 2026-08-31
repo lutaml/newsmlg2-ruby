@@ -5,8 +5,9 @@ require 'date'
 module Newsmlg2
   class Builder
     # Wraps one model instance and exposes a DSL method per lutaml-model
-    # attribute. Methods are generated at wrap time from the attribute
-    # metadata, so unknown methods fail with a normal NoMethodError.
+    # attribute. One anonymous Node subclass per model class carries the
+    # generated methods, defined once at class level — wrapping a model
+    # only allocates an instance.
     #
     # NOTE: blocks run under instance_eval, so an unqualified method call
     # inside a block resolves against the node first — if the name matches
@@ -18,12 +19,74 @@ module Newsmlg2
       SCALAR_TYPES = [String, Numeric, Symbol, TrueClass, FalseClass, NilClass,
                       Time, Date, DateTime].freeze
 
-      def initialize(model)
-        @model = model
-        define_attribute_methods
+      # Builds and memoizes one anonymous Node subclass per model class,
+      # with the DSL methods defined once at class level.
+      class ProxyFactory
+        class << self
+          # The proxy class carrying the DSL methods of one model class.
+          def for(model_class)
+            proxies[model_class] ||= build(model_class)
+          end
+
+          private
+
+          def proxies
+            @proxies ||= {}
+          end
+
+          def build(model_class)
+            proxy = Class.new(Node)
+            model_class.attributes.each_key do |name|
+              define_attribute_method(proxy, model_class, name)
+            end
+            proxy
+          end
+
+          # The DSL method for one attribute, plus the singular alias when
+          # the attribute is a collection (names -> name, keywords ->
+          # keyword, libraries -> library — python-newsmlg2 parity).
+          def define_attribute_method(proxy, model_class, name)
+            return if proxy.method_defined?(name)
+
+            proxy.define_method(name) do |value = UNSET, **attrs, &block|
+              set_attribute(name, value, attrs, block)
+            end
+
+            singular = singular_of(name)
+            return unless singular &&
+                          model_class.attributes[name].options[:collection]
+
+            proxy.define_method(singular) do |value = UNSET, **attrs, &block|
+              set_attribute(name, value, attrs, block)
+            end
+          end
+
+          def singular_of(name)
+            s = name.to_s
+            if s.end_with?('ies')
+              "#{s[0..-4]}y"
+            elsif s.end_with?('s') && !s.end_with?('ss')
+              s[0..-2]
+            end
+          end
+        end
+      end
+
+      class << self
+        # Routes to the per-model-class proxy; the proxies themselves use
+        # the standard allocator.
+        def new(model)
+          return super unless equal?(Node)
+
+          ProxyFactory.for(model.class).new(model)
+        end
       end
 
       attr_reader :model
+
+      def initialize(model)
+        @model = model
+      end
 
       # Runs a block against this node and returns the underlying model.
       def apply(&block)
@@ -33,40 +96,11 @@ module Newsmlg2
 
       private
 
-      def define_attribute_methods
-        @model.class.attributes.each_key do |name|
-          next if respond_to?(name, false) || respond_to?(name)
-
-          define_singleton_method(name) do |value = UNSET, **attrs, &block|
-            set_attribute(name, value, attrs, block)
-          end
-
-          singular = singular_of(name)
-          next unless singular && collection?(name)
-
-          define_singleton_method(singular) do |value = UNSET, **attrs, &block|
-            set_attribute(name, value, attrs, block)
-          end
-        end
-      end
-
-      # python-newsmlg2 parity: singular accessor appending to a plural
-      # collection attribute (names -> name, keywords -> keyword,
-      # libraries -> library).
-      def singular_of(name)
-        s = name.to_s
-        if s.end_with?('ies')
-          "#{s[0..-4]}y"
-        elsif s.end_with?('s') && !s.end_with?('ss')
-          s[0..-2]
-        end
-      end
-
       def set_attribute(name, value, attrs, block)
         validate_value!(name, value) unless value.equal?(UNSET)
 
         child = build_value(name, value, attrs)
-        child = self.class.new(child).apply(&block) if block && child.is_a?(NarModel)
+        child = Node.new(child).apply(&block) if block && child.is_a?(NarModel)
         assign(name, child)
         child
       end
