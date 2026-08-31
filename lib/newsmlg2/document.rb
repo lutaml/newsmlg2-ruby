@@ -56,10 +56,10 @@ module Newsmlg2
       # of truth.
       def root_class(xml)
         root = Lutaml::Model::Config.adapter_for(:xml).parse(xml).root
+        return ['', nil] unless root
+
         name = root.name.sub(/\A[\w.-]+:/, '')
         [name, Configuration.resolve(name)]
-      rescue StandardError
-        ['', nil]
       end
     end
 

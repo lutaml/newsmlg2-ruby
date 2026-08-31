@@ -135,18 +135,12 @@ module Newsmlg2
       end
 
       def collection?(name)
-        attribute = @model.class.attributes[name]
-        attribute.options[:collection] == true
-      rescue StandardError
-        false
+        @model.class.attributes[name].options[:collection] == true
       end
 
       def attribute_type(name)
-        attribute = @model.class.attributes[name]
-        type = attribute.type
+        type = @model.class.attributes[name].type
         type.is_a?(Class) ? type : String
-      rescue StandardError
-        String
       end
     end
   end
