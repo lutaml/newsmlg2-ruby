@@ -32,9 +32,9 @@ module Newsmlg2
     # registry (newsItem -> build_news_item, newsMessage ->
     # build_news_message). Registering a model adds its factory; the
     # registry stays the single source of truth for the item types.
-    FACTORIES = Newsmlg2::Configuration.models.to_h { |model_id, klass|
+    FACTORIES = Newsmlg2::Configuration.models.to_h do |model_id, klass|
       [:"build_#{Newsmlg2::Configuration.snake(model_id)}", klass]
-    }.freeze
+    end.freeze
 
     FACTORIES.each do |factory, klass|
       define_singleton_method(factory) do |**attributes, &block|

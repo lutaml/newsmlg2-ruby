@@ -103,30 +103,29 @@ module Newsmlg2
   class ItemSet < Newsmlg2::NarModel
     include Newsmlg2::Base::CommonPowerAttributes
 
-    attribute :news_items, :newsItem, collection: true
-    attribute :package_items, :packageItem, collection: true
-    attribute :concept_items, :conceptItem, collection: true
-    attribute :knowledge_items, :knowledgeItem, collection: true
-    attribute :catalog_items, :catalogItem, collection: true
-    attribute :planning_items, :planningItem, collection: true
-    attribute :news_messages, :newsMessage, collection: true
+    # One collection attribute + element rule per registered item type,
+    # generated from the registry (newsItem -> news_items): the single
+    # source of truth for the carried item types. Registration order is
+    # declaration order, so serialized child order is stable.
+    ITEM_ELEMENTS = Newsmlg2::Configuration.models.map do |model_id, _klass|
+      [model_id, :"#{Newsmlg2::Configuration.snake(model_id)}s"]
+    end.freeze
+
+    ITEM_ATTRIBUTES = ITEM_ELEMENTS.map(&:last).freeze
+
+    ITEM_ELEMENTS.each do |model_id, plural|
+      attribute plural, model_id, collection: true
+      xml { map_element model_id.to_s, to: plural }
+    end
 
     xml do
       element 'itemSet'
-      map_element 'newsItem', to: :news_items
-      map_element 'packageItem', to: :package_items
-      map_element 'conceptItem', to: :concept_items
-      map_element 'knowledgeItem', to: :knowledge_items
-      map_element 'catalogItem', to: :catalog_items
-      map_element 'planningItem', to: :planning_items
-      map_element 'newsMessage', to: :news_messages
     end
 
     # All carried items (grouped by item type — the model keeps per-type
     # collections, as lutaml-model mappings are name-keyed).
     def items
-      news_items + package_items + concept_items + knowledge_items +
-        catalog_items + planning_items + news_messages
+      ITEM_ATTRIBUTES.flat_map { |name| send(name) }
     end
   end
 
