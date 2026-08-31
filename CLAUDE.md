@@ -44,7 +44,7 @@ Never modify vendored fixture files under `spec/fixtures/` (copied from the refe
 
 ### Model layer (chemicalml pattern)
 
-One Ruby class per NewsML-G2 complex type, `snake_case` file per class under `lib/newsmlg2/`, all wired with `autoload` from `lib/newsmlg2.rb` (never `require_relative`).
+One Ruby class per NewsML-G2 complex type, grouped into `snake_case` **family files** under `lib/newsmlg2/` by owning XSD type family (e.g. `types/party_details.rb`, `items/any_item.rb` host several related classes each — mirroring python-newsmlg2's layout), all wired with `autoload` from `lib/newsmlg2.rb` and the `types.rb`/`base.rb` index files (never `require_relative`). The autoload tables are the navigation index: grep a class name to land on its host file.
 
 - **`Base::*` modules** (`lib/newsmlg2/base/`) — one per XSD *attribute group* (`CommonPowerAttributes`, `I18NAttributes`, `FlexAttributes`, …) and per shared *element group* (`ItemManagementGroup`, `DescriptiveMetadataGroup`, `ConceptRelationshipsGroup`, …). Each declares its `attribute`s and appends mappings via a `self.included(klass)` hook — this is how python-newsmlg2's multiple-inheritance MRO merging translates to Ruby mixins.
 - **Wire classes** — thin: `class NewsItem < Lutaml::Model::Serializable; include Base::…; include …; end` with their `xml do … end` mapping (`root`, `map_element`, `map_attribute`, `map_content`).
