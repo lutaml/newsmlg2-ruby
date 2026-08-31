@@ -63,7 +63,7 @@ module Newsmlg2
       end
     end
 
-    attr_reader :item
+    attr_reader :item, :catalog_store
 
     # @param item [Newsmlg2::AnyItem, Newsmlg2::NewsMessage]
     def initialize(item = nil)
@@ -84,12 +84,6 @@ module Newsmlg2
       load_catalogs
     end
 
-    # The catalogs known to this document (inline catalogs plus catalogRefs
-    # resolvable through the bundled IPTC catalog cache).
-    def catalog_store
-      @catalog_store ||= CatalogStore.new.tap { |store| load_catalogs_into(store) }
-    end
-
     # Serializes the document: XML declaration plus the item, validating that
     # a guid is present (items only).
     def to_xml(**options)
@@ -100,24 +94,15 @@ module Newsmlg2
 
     private
 
+    # Fills the store from every element the item declares as carrying
+    # catalogs (items inline; a newsMessage on its header).
     def load_catalogs
-      load_catalogs_into(catalog_store)
-    end
-
-    def load_catalogs_into(store)
       return unless item
 
-      case item
-      when AnyItem then load_catalog_holders(store, item)
-      when NewsMessage then load_catalog_holders(store, item.header)
+      item.catalog_holders.each do |holder|
+        holder.catalogs.to_a.each { |catalog| catalog_store.add_catalog(catalog) }
+        holder.catalog_refs.to_a.each { |ref| catalog_store.add_catalog_ref(ref.href) }
       end
-    end
-
-    def load_catalog_holders(store, holder)
-      return unless holder
-
-      holder.catalogs.to_a.each { |catalog| store.add_catalog(catalog) }
-      holder.catalog_refs.to_a.each { |ref| store.add_catalog_ref(ref.href) }
     end
   end
 end

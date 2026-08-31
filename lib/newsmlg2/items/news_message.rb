@@ -138,5 +138,11 @@ module Newsmlg2
     xml do
       element 'newsMessage'
     end
+
+    # The elements of this message that carry catalogs and catalogRefs for
+    # the document's CatalogStore (a newsMessage carries them on its header).
+    def catalog_holders
+      header ? [header] : []
+    end
   end
 end
