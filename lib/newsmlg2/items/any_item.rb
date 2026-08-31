@@ -169,6 +169,12 @@ module Newsmlg2
                                type: Newsmlg2::Types::RightsInfo, collection: true
     xml_element :item_meta, xml: 'itemMeta', type: Newsmlg2::ItemMeta
 
+    # The elements of this item that carry catalogs and catalogRefs for the
+    # document's CatalogStore (items carry them inline).
+    def catalog_holders
+      [self]
+    end
+
     # Raises unless the item carries the attributes any NewsML-G2 item
     # requires before serialization.
     def validate!
