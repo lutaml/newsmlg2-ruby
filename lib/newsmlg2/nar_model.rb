@@ -45,8 +45,7 @@ module Newsmlg2
       end
 
       # Declares a child element attribute together with its XML element
-      # mapping. +type+ may be a class, a string class name (preferred inside
-      # Base group mixins to avoid autoload cycles) or a lutaml-model type.
+      # mapping. +type+ may be a class constant or a lutaml-model type.
       def xml_element(ruby_name, xml: ruby_name.to_s, type: :string, collection: false)
         attribute ruby_name, type, collection: collection
         xml { map_element xml.to_s, to: ruby_name }
