@@ -1,11 +1,23 @@
 # frozen_string_literal: true
 
+require 'date'
+
 module Newsmlg2
   class Builder
     # Wraps one model instance and exposes a DSL method per lutaml-model
     # attribute. Methods are generated at wrap time from the attribute
     # metadata, so unknown methods fail with a normal NoMethodError.
+    #
+    # NOTE: blocks run under instance_eval, so an unqualified method call
+    # inside a block resolves against the node first — if the name matches
+    # an attribute (e.g. `version_created(item)`), it becomes a DSL
+    # assignment instead of calling a helper from the enclosing scope.
+    # Non-coercible values are rejected with ArgumentError; compute values
+    # before entering the DSL or call helpers on an explicit receiver.
     class Node
+      SCALAR_TYPES = [String, Numeric, Symbol, TrueClass, FalseClass, NilClass,
+                      Time, Date, DateTime].freeze
+
       def initialize(model)
         @model = model
         define_attribute_methods
@@ -50,25 +62,45 @@ module Newsmlg2
         end
       end
 
-      def private_method_defined?(name)
-        respond_to?(name, true) && !respond_to?(name)
-      end
-
       def set_attribute(name, value, attrs, block)
-        child =
-          if attrs.any? && !value.equal?(UNSET)
-            build_child(name, **attrs, text: value.to_s)
-          elsif attrs.any?
-            build_child(name, **attrs)
-          elsif !value.equal?(UNSET)
-            coerce(name, value)
-          else
-            build_child(name)
-          end
+        validate_value!(name, value) unless value.equal?(UNSET)
 
+        child = build_value(name, value, attrs)
         child = self.class.new(child).apply(&block) if block && child.is_a?(NarModel)
         assign(name, child)
         child
+      end
+
+      def build_value(name, value, attrs)
+        return build_child(name, **attrs) if value.equal?(UNSET)
+        return coerce(name, value) if attrs.empty?
+
+        build_child(name, **attrs, text: scalar_text(value))
+      end
+
+      # Accepts model instances and scalar/coercible values; anything else
+      # (foreign application objects, most commonly an unqualified helper
+      # call captured by instance_eval) fails fast here instead of
+      # corrupting the model graph and exploding at serialization time.
+      def validate_value!(name, value)
+        return if coercible_scalar?(value)
+        return if value.is_a?(NarModel)
+
+        raise ArgumentError,
+              "#{@model.class.name} attribute #{name} cannot assign " \
+              "#{value.class} (#{value.inspect[0, 60]}). Builder blocks run " \
+              'under instance_eval: an unqualified method call whose name ' \
+              'matches an attribute becomes a DSL assignment. Compute the ' \
+              'value before entering the block, or call helpers on an ' \
+              'explicit receiver.'
+      end
+
+      def coercible_scalar?(value)
+        SCALAR_TYPES.any? { |type| value.is_a?(type) }
+      end
+
+      def scalar_text(value)
+        value.is_a?(Time) ? value.strftime('%Y-%m-%dT%H:%M:%S%:z') : value.to_s
       end
 
       def build_child(name, **attrs)
@@ -80,17 +112,13 @@ module Newsmlg2
 
       def coerce(name, value)
         type = attribute_type(name)
-        return value if type == String || (!value.is_a?(String) && !value.is_a?(Numeric))
+        return value if type == String || value.nil?
+        return value unless coercible_scalar?(value)
 
-        # A String (or number) assigned to a content-bearing model type
-        # wraps into the type's text content (python-newsmlg2's
+        # A scalar assigned to a content-bearing model type wraps into the
+        # type's text content (python-newsmlg2's
         # "located.name = 'Berlin'" convenience).
-        type.new(text: value.to_s)
-      end
-
-      def text_typed?(name)
-        type = attribute_type(name)
-        type != String
+        type.new(text: scalar_text(value))
       end
 
       def assign(name, child)

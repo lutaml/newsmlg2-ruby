@@ -111,6 +111,77 @@ RSpec.describe Newsmlg2::Builder do
     end
   end
 
+  describe 'scalar coercion' do
+    it 'wraps Time values as ISO 8601 text preserving the offset' do
+      doc = Newsmlg2.build_news_item(guid: 'g') do |item|
+        item.item_meta do |meta|
+          meta.version_created Time.utc(2026, 8, 30, 12, 0, 0)
+        end
+        item.content_meta do |cm|
+          cm.content_created Time.new(2026, 8, 30, 14, 0, 0, '+02:00')
+        end
+      end
+      expect(doc.item.item_meta.version_created.text).to eq('2026-08-30T12:00:00+00:00')
+      expect(doc.item.content_meta.content_created.text).to eq('2026-08-30T14:00:00+02:00')
+    end
+
+    it 'wraps Date, DateTime and Symbol values as text' do
+      doc = Newsmlg2.build_news_item(guid: 'g') do |item|
+        item.item_meta do |meta|
+          meta.version_created Date.new(2026, 8, 30)
+        end
+        item.content_meta do |cm|
+          cm.content_created DateTime.new(2026, 8, 30, 12, 0, 0, '+00:00')
+          cm.headline :symbol_headline
+        end
+      end
+      expect(doc.item.item_meta.version_created.text).to eq('2026-08-30')
+      expect(doc.item.content_meta.content_created.text).to eq('2026-08-30T12:00:00+00:00')
+      expect(doc.item.content_meta.headlines.first.text).to eq('symbol_headline')
+    end
+  end
+
+  describe 'instance_eval semantics' do
+    it 'fails fast when an unqualified call assigns a foreign object' do
+      projection = Struct.new(:timestamp).new('2026-08-30T12:00:00+00:00')
+
+      expect do
+        Newsmlg2.build_news_item(guid: 'g') do |item|
+          item.item_meta do |meta|
+            meta.version_created(projection)
+          end
+        end
+      end.to raise_error(ArgumentError, /instance_eval/)
+    end
+
+    it 'assigns values computed before entering the block' do
+      projection = Struct.new(:timestamp).new('2026-08-30T12:00:00+00:00')
+      created = projection.timestamp
+
+      doc = Newsmlg2.build_news_item(guid: 'g') do |item|
+        item.item_meta do |meta|
+          meta.version_created created
+        end
+      end
+
+      expect(doc.item.item_meta.version_created.text)
+        .to eq('2026-08-30T12:00:00+00:00')
+    end
+
+    it 'assigns helper results called on an explicit receiver inside the block' do
+      projection = Struct.new(:timestamp).new('2026-08-30T12:00:00+00:00')
+
+      doc = Newsmlg2.build_news_item(guid: 'g') do |item|
+        item.item_meta do |meta|
+          meta.version_created projection.timestamp
+        end
+      end
+
+      expect(doc.item.item_meta.version_created.text)
+        .to eq('2026-08-30T12:00:00+00:00')
+    end
+  end
+
   describe 'errors' do
     it 'raises NoMethodError for unknown attributes' do
       expect do

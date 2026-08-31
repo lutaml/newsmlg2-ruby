@@ -77,6 +77,38 @@ Builder methods are generated from the model metadata: one per attribute
 to +subjects+), keyword arguments become child attributes, plain strings
 wrap into content-bearing types, and blocks nest.
 
+Scalars +Time+, +Date+, +DateTime+ and +Symbol+ are accepted wherever a
+string is, formatted as ISO 8601 with the original offset preserved.
+
+=== Gotcha: blocks run under +instance_eval+
+
+Builder blocks are evaluated against the node itself (+instance_eval+), so
+an unqualified method call inside a block resolves against the node first.
+If its name happens to match an attribute — for example calling your own
++version_created(item)+ helper while the node also defines a
++version_created+ attribute method — the call is swallowed by the DSL and
+the argument becomes the attribute value.
+
+Assigning a non-coercible value (a foreign application object) fails fast
+with an +ArgumentError+ explaining this, instead of corrupting the model
+graph and failing later at serialization time. Note that a helper whose
+result *is* a valid model or scalar will still be assigned silently — the
+guard cannot tell a legitimate value from an accidental one.
+
+Compute values before entering the block, or call helpers on an explicit
+receiver:
+
+.....
+created = projection.version_created(item)   # computed outside
+
+doc = Newsmlg2.build_news_item(guid: guid) do |item|
+  item.item_meta do |meta|
+    meta.version_created created
+    # or: meta.version_created projection.version_created(item)
+  end
+end
+.....
+
 == Serialization
 
 .....
