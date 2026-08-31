@@ -18,8 +18,12 @@ by this gem. Architecture reviews and ADRs use these terms.
 ## The catalog system
 
 - **Catalog** — a set of scheme declarations, inline (`<catalog>`) or
-  referenced (`<catalogRef href=…>`, resolved offline from the bundled
-  IPTC catalogs).
+  referenced (`<catalogRef href=…>`).
+- **Bundled catalogs** — the IPTC standard catalogs shipped under
+  `lib/newsmlg2/catalogs/`; `CatalogCache` resolves IPTC catalog URLs to
+  them offline, parsing each file once per process and sharing the result
+  (immutable). The directory itself is the source of truth for which
+  catalogs resolve.
 - **Scheme** — one alias-to-URI mapping inside a catalog
   (`alias="ninat"`, `uri="http://cv.iptc.org/newscodes/ninature/"`).
 - **QCode** — a compressed concept reference `alias:code` (e.g.

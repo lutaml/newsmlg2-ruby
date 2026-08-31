@@ -14,6 +14,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `build_*` factories and `ItemSet`'s carried-item mapping are generated
   from the `Configuration` registry instead of hand-mirroring it.
 
+### Performance
+
+- `CatalogCache` derives its index from the bundled catalog directory
+  and parses each bundled catalog once per process, shared across
+  documents: parsing a document with a `catalogRef` drops from ~265ms to
+  ~25ms warm (was re-reading and re-parsing the XML on every parse).
+- The builder DSL is defined once per model class (`Builder::Node`
+  proxies) instead of regenerated per wrapped node: node wraps drop from
+  ~39µs to ~0.3µs.
+
 ### Fixed
 
 - Builder DSL: assigning a non-coercible value to an attribute (most
