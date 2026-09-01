@@ -47,6 +47,21 @@ RSpec.describe Newsmlg2::Document do
     end
   end
 
+  describe 'unresolvable configured adapter (fresh install)' do
+    it 'parses and serializes through the stdlib rexml fallback' do
+      doc_class = nil
+      serialized = Lutaml::Model::Config.with_adapter(xml: :leptris) do
+        doc = described_class.parse(news_item_xml)
+        doc_class = doc.item.class
+        doc.to_xml
+      end
+
+      expect(doc_class).to be(Newsmlg2::NewsItem)
+      expect(serialized).to start_with('<?xml version="1.0" encoding="UTF-8"?>')
+      expect(serialized).to include('guid="test-guid"')
+    end
+  end
+
   describe '.parse_file' do
     it 'parses a file from disk' do
       doc = Newsmlg2::Document.parse_file(

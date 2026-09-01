@@ -65,6 +65,7 @@ One Ruby class per NewsML-G2 complex type, grouped into `snake_case` **family fi
 1. **Ported python suite** — `spec/newsmlg2/**` mirroring `python-newsmlg2/tests/test_*.py` one-to-one (semantics preserved, Ruby idioms).
 2. **IPTC examples** — `spec/compliance/examples_spec.rb` over vendored `spec/fixtures/iptc/examples/` (31 LISTING files + extras): parse → typed assertions → semantic round-trip via canon.
 3. **IPTC official validation suite** — `spec/compliance/xsd_validation_spec.rb` over `spec/fixtures/iptc/unit_test_files/` (151 should-pass / 10 should-fail) × per-version XSDs from `tests/schema_versions/`, using `Lutaml::Xml::XsdValidator`; the file→schema matrix mirrors `tests/runtests.py` exactly.
+4. **Conformance goldens** — `spec/conformance/golden_spec.rb` parses and round-trips the shared golden documents of the sibling `newsmlg2-fixtures` repo (cross-implementation SSOT; a TypeScript codec runs the mirror suite). Regenerate via that repo's `bin/regenerate` (invokes `tools/generate_golden.rb`); the suite skips silently when the fixtures repo is absent (`NEWSMLG2_FIXTURES=<path>` overrides discovery), e.g. on CI.
 
 ## Conventions
 

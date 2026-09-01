@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Cross-implementation conformance: `tools/generate_golden.rb` generates
+  the golden documents of the sibling `newsmlg2-fixtures` repository
+  (honoring the `OUT` set by its `bin/regenerate`), and
+  `spec/conformance/golden_spec.rb` parses and round-trips every golden
+  — skipping silently when the fixtures repository is absent.
+
 ### Changed
 
 - Architecture deepening: qcode ⇄ URI conversion moved from `Utils` onto
@@ -19,6 +27,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `Newsmlg2::Utils`: qcode conversion lives on `CatalogStore` and the
   `Newsmlg2.qcode_to_uri` / `Newsmlg2.uri_to_qcode` facade (both accept a
   document or a store).
+
+### Fixed
+
+- `Document#to_xml` now falls back to the stdlib REXML adapter when the
+  configured XML adapter cannot be resolved, like `Newsmlg2.parse`
+  already did — previously only parsing worked on a fresh install. The
+  fallback also covers lutaml-model raising a plain `ArgumentError`
+  (rather than `UnknownAdapterTypeError`) for an unknown adapter on its
+  eager-validation path.
 
 ### Performance
 

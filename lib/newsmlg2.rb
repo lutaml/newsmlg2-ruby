@@ -89,6 +89,7 @@ module Newsmlg2
   autoload :SameAsScheme, 'newsmlg2/same_as_scheme'
 
   # Document entry point and support.
+  autoload :Adapter, 'newsmlg2/adapter'
   autoload :AliasNotFoundInCatalogs, 'newsmlg2/errors'
   autoload :Builder, 'newsmlg2/builder'
   autoload :Configuration, 'newsmlg2/configuration'
