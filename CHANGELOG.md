@@ -14,6 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `build_*` factories and `ItemSet`'s carried-item mapping are generated
   from the `Configuration` registry instead of hand-mirroring it.
 
+### Removed
+
+- `Newsmlg2::Utils`: qcode conversion lives on `CatalogStore` and the
+  `Newsmlg2.qcode_to_uri` / `Newsmlg2.uri_to_qcode` facade (both accept a
+  document or a store).
+
 ### Performance
 
 - `CatalogCache` derives its index from the bundled catalog directory

@@ -69,9 +69,9 @@ RSpec.describe Newsmlg2::CatalogStore do
         .to eq('http://cv.iptc.org/newscodes/ninature/text')
       expect(store.uri_to_qcode('http://cv.iptc.org/newscodes/ninature/text'))
         .to eq('ninat:text')
-      expect(Newsmlg2::Utils.qcode_to_uri('ninat:text', store))
+      expect(Newsmlg2.qcode_to_uri('ninat:text', store))
         .to eq('http://cv.iptc.org/newscodes/ninature/text')
-      expect(Newsmlg2::Utils.uri_to_qcode('http://cv.iptc.org/newscodes/ninature/text', store))
+      expect(Newsmlg2.uri_to_qcode('http://cv.iptc.org/newscodes/ninature/text', store))
         .to eq('ninat:text')
     end
 

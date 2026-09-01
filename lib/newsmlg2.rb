@@ -101,7 +101,6 @@ module Newsmlg2
   autoload :NitfNamespace, 'newsmlg2/nitf_namespace'
   autoload :UnknownRootElement, 'newsmlg2/errors'
   autoload :UriNotFoundInCatalogs, 'newsmlg2/errors'
-  autoload :Utils, 'newsmlg2/utils'
 
   class << self
     # Parses NewsML-G2 XML (any item type or a newsMessage envelope).
@@ -119,24 +118,34 @@ module Newsmlg2
     end
 
     # Expands a qcode (e.g. "ninat:text") to its full concept URI using the
-    # catalogs registered with the given document (or a CatalogStore).
+    # catalogs of the given document (or a CatalogStore).
     #
     # @raise [Newsmlg2::AliasNotFoundInCatalogs]
-    def qcode_to_uri(qcode, document)
-      Utils.qcode_to_uri(qcode, document)
+    def qcode_to_uri(qcode, store_or_document)
+      store_for(store_or_document).qcode_to_uri(qcode)
     end
 
     # Compresses a concept URI back to a qcode using the given document's
-    # catalogs.
+    # catalogs (or a CatalogStore).
     #
     # @raise [Newsmlg2::UriNotFoundInCatalogs]
-    def uri_to_qcode(uri, document)
-      Utils.uri_to_qcode(uri, document)
+    def uri_to_qcode(uri, store_or_document)
+      store_for(store_or_document).uri_to_qcode(uri)
     end
 
     # Builder DSL entry points (see Newsmlg2::Builder).
     def build_item(klass, **attributes, &)
       Builder.build(klass, attributes, &)
+    end
+
+    private
+
+    def store_for(store_or_document)
+      if store_or_document.is_a?(CatalogStore)
+        store_or_document
+      else
+        store_or_document.catalog_store
+      end
     end
   end
 
